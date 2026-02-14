@@ -82,11 +82,5 @@ export const videos = [
     alt: "A beautiful video",
     caption: "You are my forever",
     type: "video",
-  },
-  {
-    src: "/VID-20231205-WA0007.mp4",
-    alt: "A beautiful video",
-    caption: "You are my always",
-    type: "video",
   }
 ];
