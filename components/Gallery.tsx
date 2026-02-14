@@ -221,7 +221,7 @@ function FloatingImage({
                 delay,
                 opacity: {
                     duration,
-                    times: [0, 0.1, 0.9, 1],
+                    times: [0, 0.2, 0.9, 1],
                 },
             }}
         >
@@ -253,8 +253,8 @@ export function Gallery() {
             ...img,
             x: ((index * 137) % 80) + 10,
             rotate: ((index * 151) % 20) - 10,
-            delay: index * 4, // Stagger the animation
-            duration: totalImages * 2, // Ensure the animation is long enough for all images to have their turn
+            delay: index * 0.5, // Stagger the animation
+            duration: totalImages * 0.1, // Ensure the animation is long enough for all images to have their turn
         }))
     }, [])
 
