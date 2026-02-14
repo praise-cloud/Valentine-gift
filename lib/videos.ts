@@ -1,4 +1,4 @@
-export const videos = [
+export const videos: { src: string; alt: string; caption: string; type: 'video'; }[] = [
   {
     src: "/24521.mp4",
     alt: "A beautiful video",
@@ -81,6 +81,12 @@ export const videos = [
     src: "/VID-20231105-WA0019.mp4",
     alt: "A beautiful video",
     caption: "You are my forever",
+    type: "video",
+  },
+  {
+    src: "/VID-20231205-WA0007.mp4",
+    alt: "A beautiful video",
+    caption: "You are my always",
     type: "video",
   }
 ];

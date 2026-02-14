@@ -1,4 +1,4 @@
-export const images = [
+export const images: { src: string; alt: string; caption: string; type: 'image'; }[] = [
   {
     src: "/074979f7-d726-4c43-ba46-83bc21bee1c5.jpg",
     alt: "A beautiful image",
