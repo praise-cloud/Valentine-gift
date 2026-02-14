@@ -2,6 +2,7 @@ import { SmoothScroll } from "@/components/SmoothScroll"
 import { Hero } from "@/components/Hero"
 import { Gallery } from "@/components/Gallery"
 import { Message } from "@/components/Message"
+import { MusicPlayer } from "@/components/MusicPlayer"
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         <Hero />
         <Gallery />
         <Message />
+        <MusicPlayer />
       </main>
     </SmoothScroll>
   )
