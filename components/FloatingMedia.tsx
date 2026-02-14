@@ -45,15 +45,13 @@ export function FloatingMedia({
         onClick={handleClick}
         style={{
           left: `${x}%`,
-          rotate: rotate,
           transformOrigin: "center center",
         }}
         className={cn(
-          "absolute w-48 md:w-64 aspect-[3/4] p-2 bg-white/90 shadow-lg backdrop-blur-sm cursor-pointer",
-          "top-0"
+          "absolute w-48 md:w-64 aspect-[3/4] p-2 bg-white/90 shadow-lg backdrop-blur-sm cursor-pointer"
         )}
-        initial={{ y: "100vh", opacity: 0 }}
-        animate={{ y: "-100vh", opacity: [0, 1, 1, 0] }}
+        initial={{ top: "100%", opacity: 0, rotate }}
+        animate={{ top: "-50%", opacity: [0, 1, 1, 0], rotate }}
         transition={{
           duration,
           repeat: Infinity,
