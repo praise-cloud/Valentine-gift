@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from 'react'
 import ReactPlayer from 'react-player'
@@ -17,14 +17,14 @@ export function MusicPlayer() {
 
     return (
         <div className="fixed bottom-6 right-6 z-50">
-            <div className="hidden">
+            <div className="absolute top-0 left-0 w-0 h-0">
                 <ReactPlayer
                     url="https://www.youtube.com/watch?v=GxldQ9eX2wo"
                     playing={playing}
                     loop
                     volume={0.6}
-                    width="0"
-                    height="0"
+                    width="100%"
+                    height="100%"
                     config={{
                         youtube: {
                             playerVars: { showinfo: 0 }
@@ -33,21 +33,33 @@ export function MusicPlayer() {
                 />
             </div>
 
-            <motion.button
+            <button
                 onClick={() => setPlaying(!playing)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="group relative flex items-center justify-center w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white shadow-lg hover:bg-white/20 transition-all overflow-hidden"
+                className="w-12 h-12 rounded-full bg-rose-500/90 backdrop-blur-sm shadow-lg flex items-center justify-center text-white hover:bg-rose-600 transition-colors"
+                aria-label={playing ? 'Pause music' : 'Play music'}
             >
-                <div className={`absolute inset-0 bg-rose-500/20 rounded-full transition-transform duration-1000 ${playing ? 'animate-pulse' : 'scale-0'}`} />
-
-                {playing ? (
-                    <Pause size={20} className="relative z-10 fill-white" />
-                ) : (
-                    <Play size={20} className="relative z-10 fill-white ml-1" />
-                )}
-            </motion.button>
-
+                <AnimatePresence mode="wait">
+                    {playing ? (
+                        <motion.div
+                            key="pause"
+                            initial={{ opacity: 0, rotate: -90 }}
+                            animate={{ opacity: 1, rotate: 0 }}
+                            exit={{ opacity: 0, rotate: 90 }}
+                        >
+                            <Pause size={20} />
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="play"
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                        >
+                            <Play size={20} className="ml-0.5" />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </button>
             <AnimatePresence>
                 {!playing && (
                     <motion.div
