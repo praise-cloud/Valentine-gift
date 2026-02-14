@@ -1,9 +1,9 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import React from "react"
 
 const images = [
     { src: "/IMG-20260121-WA0039.jpg", alt: "Us", caption: "MAGIC" },
@@ -11,92 +11,143 @@ const images = [
     { src: "/IMG-20260203-WA0025.jpg", alt: "Love", caption: "FOREVER" },
     { src: "/IMG_2620.JPG", alt: "Adventure", caption: "FLY" },
     { src: "/PXL_20260127_123030757.jpg", alt: "Smile", caption: "LIGHT" },
-    { src: "/WhatsApp Image 2026-01-15 at 5.48.14 PM.jpeg", alt: "Memories", caption: "US" },
     { src: "/b06fa58b-2d53-469e-bb50-0d70ad493242.jpg", alt: "Forever", caption: "ALWAYS" },
+    { src: "/074979f7-d726-4c43-ba46-83bc21bee1c5.jpg", alt: "Image", caption: "Explore" },
+    { src: "/333d2fd4-1ad8-4755-9f27-5868a97deba8.jpg", alt: "Image", caption: "Discover" },
+    { src: "/47d480d3-a154-4a18-bdcc-7638c789f64e.JPG", alt: "Image", caption: "Journey" },
+    { src: "/IMG-20260121-WA0036.jpg", alt: "Image", caption: "Create" },
+    { src: "/IMG-20260121-WA0040.jpg", alt: "Image", caption: "Imagine" },
+    { src: "/IMG-20260121-WA0041.jpg", alt: "Image", caption: "Inspire" },
+    { src: "/IMG-20260121-WA0042.jpg", alt: "Image", caption: "Wonder" },
+    { src: "/IMG-20260203-WA0023(1).jpg", alt: "Image", caption: "Believe" },
+    { src: "/IMG-20260203-WA0024.jpg", alt: "Image", caption: "Hope" },
+    { src: "/IMG-20260203-WA0026.jpg", alt: "Image", caption: "Shine" },
+    { src: "/IMG_9714.JPG", alt: "Image", caption: "Bliss" },
+    { src: "/e857564e-7b00-4e4b-a338-c5aaaa821f61.JPG", alt: "Image", caption: "Peace" },
+    { src: "/p1.jpeg", alt: "Image", caption: "Unity" },
+    { src: "/p2.jpeg", alt: "Image", caption: "Harmony" },
+    { src: "/p3.jpeg", alt: "Image", caption: "Serenity" },
+    { src: "/p4.jpeg", alt: "Image", caption: "Courage" },
+    { src: "/p5.jpeg", alt: "Image", caption: "Strength" },
+    { src: "/p6.jpeg", alt: "Image", caption: "Wisdom" },
+    { src: "/p7.jpeg", alt: "Image", caption: "Freedom" },
+    { src: "/p8.jpeg", alt: "Image", caption: "Growth" },
+    { src: "/p9.jpeg", alt: "Image", caption: "Success" },
+    { src: "/p10.jpeg", alt: "Image", caption: "Glory" },
+    { src: "/p12.jpeg", alt: "Image", caption: "Victory" },
+    { src: "/p13.jpeg", alt: "Image", caption: "Triumph" },
+    { src: "/p14.jpeg", alt: "Image", caption: "Legend" }
 ]
 
-// Random positioning helpers
-const randomPosition = (i: number) => {
-    // Deterministic pseudo-random based on index to ensure hydration match
-    const x = ((i * 37) % 70) + 10 // 10% to 80% left
-    const y = ((i * 53) % 40) // offset
-    const rotate = ((i * 13) % 30) - 15 // -15 to +15 deg
-    return { x, y, rotate }
-}
-
-function FloatingImage({ src, alt, caption, index }: { src: string, alt: string, caption: string, index: number }) {
-    const containerRef = useRef(null)
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    })
-
-    const { x, rotate } = randomPosition(index)
-
-    // Different speeds for parallax depth (some move faster than others)
-    const yInfo = useTransform(scrollYProgress, [0, 1], [0, -300 - (index * 50)])
-
+function FloatingImage({
+    src,
+    alt,
+    caption,
+    x,
+    rotate,
+    delay,
+    duration
+}: {
+    src: string
+    alt: string
+    caption: string
+    x: number
+    rotate: number
+    delay: number
+    duration: number
+}) {
     return (
-        <motion.div
-            ref={containerRef}
+        <motion.a
+            href="#"
             style={{
-                y: yInfo,
                 left: `${x}%`,
                 rotate: rotate,
+                transformOrigin: "center center",
             }}
             className={cn(
-                "absolute w-48 md:w-64 aspect-[3/4] p-2 bg-white/90 shadow-lg backdrop-blur-sm",
-                index % 2 === 0 ? "z-10" : "z-0"
+                "absolute w-48 md:w-64 aspect-[3/4] p-2 bg-white/90 shadow-lg backdrop-blur-sm cursor-pointer",
+                "top-0" // Start from top for y animation
             )}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: index * 0.1 }}
-            viewport={{ once: true }}
+            initial={{ y: "100vh", opacity: 0 }}
+            animate={{ y: "-100vh", opacity: [0, 1, 1, 0] }}
+            transition={{
+                duration,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+                delay,
+                opacity: {
+                    duration,
+                    times: [0, 0.1, 0.9, 1],
+                },
+            }}
         >
             <div className="relative w-full h-full overflow-hidden">
-                <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    className="object-cover"
-                />
+                <Image src={src} alt={alt} fill className="object-cover" />
             </div>
             <div className="absolute -bottom-8 left-0 right-0 text-center">
-                <span className="font-serif text-white text-lg tracking-widest drop-shadow-md">{caption}</span>
+                <span className="font-serif text-white text-lg tracking-widest drop-shadow-md">
+                    {caption}
+                </span>
             </div>
-        </motion.div>
+        </motion.a>
     )
 }
 
 export function Gallery() {
-    const containerRef = useRef(null)
+    const galleryRef = React.useRef(null)
+    const { scrollYProgress } = useScroll({
+        target: galleryRef,
+        offset: ["start start", "end end"],
+    })
+
+    const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1.05, 1.05, 0.8])
+    const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0])
+
+    const animationDetails = React.useMemo(() => {
+        return images.map((img, index) => ({
+            ...img,
+            x: ((index * 137) % 80) + 10,
+            rotate: ((index * 151) % 20) - 10,
+            delay: Math.random() * images.length * 0.4,
+            duration: 25 + Math.random() * 20,
+        }))
+    }, [])
 
     return (
-        <section ref={containerRef} className="relative min-h-[250vh] bg-neutral-950 overflow-hidden">
-            {/* Starry background effect */}
-            <div className="absolute inset-0 z-0">
-                {[...Array(20)].map((_, i) => (
-                    <div
-                        key={i}
-                        className="absolute bg-white rounded-full opacity-20 animate-pulse"
-                        style={{
-                            width: Math.random() * 3 + 'px',
-                            height: Math.random() * 3 + 'px',
-                            top: Math.random() * 100 + '%',
-                            left: Math.random() * 100 + '%',
-                            animationDuration: Math.random() * 3 + 2 + 's'
-                        }}
-                    />
-                ))}
-            </div>
+        <section ref={galleryRef} className="relative h-[250vh] bg-black">
+            <div className="sticky top-0 h-screen overflow-hidden">
+                <motion.div
+                    style={{ scale, opacity }}
+                    className="w-full h-full flex items-center justify-center"
+                >
+                    <div className="relative w-full h-full">
+                        {/* Starry background */}
+                        <div className="absolute inset-0 z-0">
+                            {[...Array(200)].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="absolute bg-white rounded-full opacity-50 animate-pulse"
+                                    style={{
+                                        width: Math.random() * 2.5 + 'px',
+                                        height: Math.random() * 2.5 + 'px',
+                                        top: Math.random() * 100 + '%',
+                                        left: Math.random() * 100 + '%',
+                                        animationDuration: Math.random() * 6 + 4 + 's',
+                                        animationDelay: Math.random() * 3 + 's',
+                                    }}
+                                />
+                            ))}
+                        </div>
 
-            <div className="relative z-10 w-full h-full pt-40 pb-40">
-                {images.map((img, index) => (
-                    // Staggering the vertical position manually to spread them out over the tall section
-                    <div key={index} className="relative h-[30vh]">
-                        <FloatingImage {...img} index={index} />
+                        {/* Floating Images */}
+                        <div className="relative z-10 w-full h-full">
+                            {animationDetails.map(details => (
+                                <FloatingImage key={details.src} {...details} />
+                            ))}
+                        </div>
                     </div>
-                ))}
+                </motion.div>
             </div>
         </section>
     )
