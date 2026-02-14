@@ -78,7 +78,6 @@ export function MusicPlayer() {
         src="/music/ytmp3free.cc_stephen-sanchez-until-i-found-you-official-video-youtubemp3free.org.mp3"
         loop
         autoPlay
-        volume={volume}
       />
 
       <button
